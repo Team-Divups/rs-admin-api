@@ -3,6 +3,16 @@ const router = express.Router();
 const pool = require('../database/database');
 const bcrypt = require('bcrypt');
 
+//GET all admin user details
+router.get('/', async function(req,res){
+    try {
+        const sqlQuery = 'SELECT id, email, password, created_at FROM user';
+        const rows = await pool.query(sqlQuery, res.body);
+        res.status(200).json(rows);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
 
 //Get Admin Data
 router.get('/:id', async function(req,res){
@@ -13,7 +23,6 @@ router.get('/:id', async function(req,res){
     } catch (error) {
         res.status(400).send(error.message);
     }
-    // res.status(200).json({id:req.params.id});
 });
 
 
@@ -56,6 +65,30 @@ router.post('/login', async function(req,res) {
         
     } catch (error) {
         res.status(400).send(error.message)
+    }
+});
+
+//Delete Admin
+router.delete('/:id', async function(req,res){
+    try {
+            const sqlQuery = 'DELETE FROM user WHERE id=?';
+            const rows = await pool.query(sqlQuery, req.params.id);
+            res.status(200).send({message: "User Deleted"});
+
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+//Update Admin
+router.put('/:id', async function(req,res){
+    try {
+            const sqlQuery = 'DELETE FROM user WHERE id=?';
+            const rows = await pool.query(sqlQuery, req.params.id);
+            res.status(200).send({message: "User Deleted"});
+
+    } catch (error) {
+        res.status(400).send(error.message);
     }
 });
 
