@@ -3,23 +3,6 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const app = express();
 const bodyparser = require('body-parser');
-// const mariadb = require('mariadb');
-
-// const pool = mariadb.createPool({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'pradeep15',
-//     database: 'rsAdmin'
-// })
-
-// async function main(){
-//     try{
-//         let conn = pool.getConnection(console.log('Database Connected'));
-//     } catch(err) {
-//         console.log('Database Conncetion Error');
-//     }
-// }
-// main();
 
 
 dotenv.config({path:'config.env'})
@@ -35,9 +18,15 @@ app.get('/',(req,res) => {
     res.send("rs-admin-api");
 })
 
-const adminRouter = require('./server/routes/admin');
 app.use(express.json());
+const adminRouter = require('./server/routes/admin');
 app.use('/admin',adminRouter);
+
+const roleRouter = require('./server/routes/role');
+app.use('/role',roleRouter);
+
+const subscriptionRouter = require('./server/routes/subscription');
+app.use('/subscription',subscriptionRouter);
 
 app.listen(PORT,()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
