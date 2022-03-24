@@ -36,3 +36,16 @@ create table subscription
         primary key (appKey)
 );
 
+create table review
+(
+    subID          int auto_increment,
+    subName        VARCHAR(50) not null,
+    totalReview    int         not null,
+    positiveReview int         not null,
+    negativeReview int         null,
+    constraint review_pk
+        primary key (subID)
+);
+
+
+
