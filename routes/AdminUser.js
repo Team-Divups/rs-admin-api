@@ -1,6 +1,17 @@
 const express= require('express');
 const pool = require('../databases/database');
 const Adminrouter = express.Router();
+const yup =require('yup');
+
+AdminSchema =  yup.object().shape({
+    name: yup.string().required("UserName is required").min(3).max(20),
+    email: yup.string().email().required(),
+    organization: yup.string().required(),
+    designation: yup.string().required(),
+    role: yup.string().required(),
+    comments : yup.string(),
+    status: yup.string(),
+});
 
 //get a specified user
 Adminrouter.get('/:id',async function(req,res){
@@ -15,6 +26,7 @@ Adminrouter.get('/:id',async function(req,res){
     }
 })
 
+
 //get all
 Adminrouter.get('/',async function(req,res){
     try {
@@ -28,6 +40,7 @@ Adminrouter.get('/',async function(req,res){
 })
 
 
+
 //create a new admin user
 Adminrouter.post('/create',async function(req,res){
     try {
@@ -39,15 +52,17 @@ Adminrouter.post('/create',async function(req,res){
         const role=req.body.role;
         const comments=req.body.comments;
         const status=req.body.status;
-
+                
         const sqlQuery='INSERT INTO admin_user (name,email,password,organization,designation,role,comments,status) VALUES (?,?,?,?,?,?,?,?)';
-        const row=await pool.query(sqlQuery,[name,email,password,organization,designation,role,comments,status]);
-
-        res.status(200).send({message:'user added'});
+        const row= await pool.query(sqlQuery,[name,email,password,organization,designation,role,comments,status]);
+        
+        res.status(200).send({message:'user added'})
+        
     } catch (error) {
         res.status(400).send(error.message);
     }
 })
+
 
 
 //delete a specific user
@@ -88,11 +103,27 @@ Adminrouter.put('/edit',async function(req,res){
         const role=req.body.role;
         const status = req.body.status;
 
-        const sqlQuery='UPDATE admin_user SET name=?, email=?,organization=?,designation=?, role=?,status=? WHERE id=?';
-        const row=await pool.query(sqlQuery,[name,email,organization,designation,role,status,id]);
+        AdminSchema.validate(
+            {
+                name,
+                email,
+                organization,
+                designation,
+                role,
+                status
+            }
+        ).catch((error)=>{
+            console.log(error);
+            res.status(422).send({messsage:"Validation errors"});
+        }).then((valid)=>{
+            if(valid){
+                console.log("Data validated");
+                const sqlQuery='UPDATE admin_user SET name=?, email=?,organization=?,designation=?, role=?,status=? WHERE id=?';
+                const row=pool.query(sqlQuery,[name,email,organization,designation,role,status,id]);
 
-        res.status(200).send({message:'user added'});
-        
+                res.status(200).send({message:'user added'});
+            }
+        })
     } catch (error) {
         res.status(400).send(error.message);
         console.log(error);
@@ -117,6 +148,8 @@ Adminrouter.put('/editname',async function(req,res){
     }
 })
 
+
+
 //invite a user
 Adminrouter.post('/invite',async function(req,res){
     try {
@@ -128,8 +161,8 @@ Adminrouter.post('/invite',async function(req,res){
         const role=req.body.role;
         const comments = req.body.comments;
         const status = req.body.status;
-       
 
+        
         const sqlQuery='INSERT INTO admin_user (name,email,password,organization,designation,role,comments,status) VALUES (?,?,?,?,?,?,?,?)';
         const row=await pool.query(sqlQuery,[name,email,password,organization,designation,role,comments,status]);
 
