@@ -15,6 +15,8 @@ app.use(express.urlencoded({extended:false}));
 const AdminUserRouter = require('./routes/AdminUser');
 app.use('/adminuser',AdminUserRouter);
 
+const SubscriptionRouter = require('./routes/Subscription');
+app.use('/subscription',SubscriptionRouter);
 
 
 //listening to port 
