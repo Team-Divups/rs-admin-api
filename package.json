@@ -1,31 +1,26 @@
 {
   "name": "rs-admin-api",
   "version": "1.0.0",
-  "description": "This is for admin site backend",
+  "description": "Node.js Demo for JWT Authentication",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Team-Divups/rs-admin-api.git"
-  },
+  "keywords": [
+    "node.js",
+    "jwt",
+    "authentication",
+    "express",
+    "mysql"
+  ],
   "author": "Anushan",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Team-Divups/rs-admin-api/issues"
-  },
-  "homepage": "https://github.com/Team-Divups/rs-admin-api#readme",
   "dependencies": {
-    "axios": "^0.26.1",
-    "bcrypt": "^5.0.1",
-    "body-parser": "^1.19.2",
-    "dotenv": "^16.0.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.3",
-    "mariadb": "^3.0.0",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.15"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.3"
   }
 }
