@@ -18,17 +18,18 @@ app.use(express.urlencoded({ extended: true }));
 // database
 const db = require("./app/models");
 const Role = db.role;
+const Subscription = db.subscription
 
-db.sequelize.sync();
+// db.sequelize.sync();
 // force: true will drop the table if it already exists
-// db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync Database with { force: true }');
-//   initial();
-// });
+db.sequelize.sync({force: true}).then(() => {
+  console.log('Drop and Resync Database with { force: true }');
+  initialRole();
+});
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to rs-admin-api application." });
 });
 
 // routes
@@ -41,7 +42,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-function initial() {
+function initialRole() {
   Role.create({
     id: 1,
     name: "user"
@@ -55,5 +56,32 @@ function initial() {
   Role.create({
     id: 3,
     name: "admin"
+  });
+
+    Role.create({
+    id: 4,
+    name: "client"
+  });
+}
+
+function initialSubscription() {
+  Subscription.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  Subscription.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  Subscription.create({
+    id: 3,
+    name: "admin"
+  });
+
+    Subscription.create({
+    id: 4,
+    name: "client"
   });
 }

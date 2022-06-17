@@ -24,9 +24,11 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+//DB Model Import
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
-db.sub =require("../models/sub.model")(sequelize, Sequelize);
+db.subscription =require("./subscription.model")(sequelize, Sequelize);
+db.review = require("./review.model")(sequelize,Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -39,6 +41,6 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["user", "admin", "moderator","client"];
 
 module.exports = db;
