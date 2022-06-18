@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const subscription = sequelize.define("subscription", {
+  const Subscription = sequelize.define("subscription", {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
     }
   });
 
-  return subscription;
+  return Subscription;
 };
 
 // CREATE TABLE `subscription` (
