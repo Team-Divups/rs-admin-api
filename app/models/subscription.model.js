@@ -3,22 +3,52 @@ module.exports = (sequelize, Sequelize) => {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    subscription: {
-      type: Sequelize.STRING
+    subId: {
+      type: Sequelize.CHAR(100),
+    },
+    name: {
+      type: Sequelize.STRING,
+    },
+    appLogo: {
+      type: Sequelize.STRING,
+    },
+    owner: {
+      type: Sequelize.STRING,
+    },
+    description: {
+      type: Sequelize.STRING,
+    },
+    WebsiteURL: {
+      type: Sequelize.STRING,
+    },
+    email: {
+      type: Sequelize.STRING,
+    },
+    contactNo: {
+      type: Sequelize.STRING,
+    },
+    LinkedIn: {
+      type: Sequelize.STRING,
+    },
+    facebook: {
+      type: Sequelize.STRING,
+    },
+    Instagram: {
+      type: Sequelize.STRING,
     },
     category: {
       type: Sequelize.ENUM,
-      values: ['platinum','gold','silver'],
-      defaultValue: 'silver'
+      values: ["Platinum", "Gold", "Silver"],
+      defaultValue: "Silver",
     },
     type: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     location: {
-      type: Sequelize.STRING
-    }
+      type: Sequelize.STRING,
+    },
   });
 
   return Subscription;

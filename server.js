@@ -7,7 +7,7 @@ var corsOptions = {
   origin: "http://localhost:8081",
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 const Role = db.role;
 const Subscription = db.subscription;
+const user = db.user;
 
 // db.sequelize.sync();
 // force: true will drop the table if it already exists
@@ -26,6 +27,7 @@ db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and Resync Database with { force: true }");
   initialRole();
   initialSubscription();
+  initialUser();
 });
 
 // simple route
@@ -39,7 +41,7 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/subcription.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
@@ -69,19 +71,96 @@ function initialRole() {
 function initialSubscription() {
   Subscription.create({
     id: 1,
-    subscription: "Platinum Member",
-    category: "platinum",
-  });
-
-  Subscription.create({
-    id: 2,
-    subscription: "Gold Member",
-    category: "gold",
+    subId: 1,
+    name: "Platinum Member",
+    appLogo: "Platinum Member",
+    owner: "Platinum Member",
+    description: "Platinum Member",
+    WebsiteURL: "Platinum Member",
+    email: "Platinum Member",
+    contactNo: "Platinum Member",
+    LinkedIn: "Platinum Member",
+    facebook: "Platinum Member",
+    Instagram: "Platinum Member",
+    category: "Platinum",
+    type: "Platinum Member",
+    location: "Platinum Member",
   });
 
   Subscription.create({
     id: 3,
-    subscription: "Silver Member",
-    category: "silver",
+    subId: 3,
+    name: "Platinum Member",
+    appLogo: "Platinum Member",
+    owner: "Platinum Member",
+    description: "Platinum Member",
+    WebsiteURL: "Platinum Member",
+    email: "Platinum Member",
+    contactNo: "Platinum Member",
+    LinkedIn: "Platinum Member",
+    facebook: "Platinum Member",
+    Instagram: "Platinum Member",
+    category: "Silver",
+    type: "Platinum",
+    location: "Platinum Member",
+  });
+
+  Subscription.create({
+    id: 2,
+    subId: 2,
+    name: "Platinum Member",
+    appLogo: "Platinum Member",
+    owner: "Platinum Member",
+    description: "Platinum Member",
+    WebsiteURL: "Platinum Member",
+    email: "Platinum Member",
+    contactNo: "Platinum Member",
+    LinkedIn: "Platinum Member",
+    facebook: "Platinum Member",
+    Instagram: "Platinum Member",
+    category: "Gold",
+    type: "Gold",
+    location: "Platinum Member",
+  });
+}
+
+function initialUser() {
+  user.create({
+    id: 1,
+    companyId: 1,
+    username: "anushan",
+    email: "anushan1508@gmail.com",
+    password: "12345678",
+    firstname: "Anushan",
+    lastname: "Santhirakumar",
+    status: "Active",
+    position: "SE",
+    userImg: "jhfsvjhdf",
+  });
+
+  user.create({
+    id: 2,
+    companyId: 2,
+    username: "Nishad",
+    email: "anushan1508@gmail.com",
+    password: "12345678",
+    firstname: "Anushan",
+    lastname: "Santhirakumar",
+    status: "Active",
+    position: "SE",
+    userImg: "jhfsvjhdf",
+  });
+
+  user.create({
+    id: 3,
+    companyId: 3,
+    username: "Hana",
+    email: "anushan1508@gmail.com",
+    password: "12345678",
+    firstname: "Anushan",
+    lastname: "Santhirakumar",
+    status: "Active",
+    position: "SE",
+    userImg: "jhfsvjhdf",
   });
 }

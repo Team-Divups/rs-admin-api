@@ -1,3 +1,4 @@
+const express = require("express");
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
@@ -10,7 +11,17 @@ const Op = db.Sequelize.Op;
 exports.createSub = (req, res) => {
   // Save Subscription to Database
   Subscription.create({
-    subscription: req.body.subscription,
+    subId: req.body.subId,
+    name: req.body.name,
+    // appLogo: req.body.appLogo,
+    owner: req.body.owner,
+    // description: req.body.description,
+    // WebsiteURL: req.body.WebsiteURL,
+    // email: req.body.email,
+    // contactNo: req.body.contactNo,
+    // LinkedIn: req.body.LinkedIn,
+    // facebook: req.body.facebook,
+    // Instagram: req.body.Instagram,
     category: req.body.category,
     type: req.body.type,
     location: req.body.location,
@@ -18,7 +29,6 @@ exports.createSub = (req, res) => {
     .then((subscription) => {
       res.send({ message: "Subcription Created" });
     })
-
     .catch((err) => {
       res.status(500).send({ message: err.message });
     });
@@ -41,9 +51,9 @@ exports.getSubCategory = async (req, res) => {
 
 //Read Subscription by ID
 exports.getSubCategoryID = async (req, res) => {
-  Subscription.find({
+  Subscription.findAll({
     where: {
-      id: req.body.id,
+      id: req.params.id,
     },
   })
     .then((subscription) => {
@@ -69,7 +79,7 @@ exports.getSubAllCategory = async (req, res) => {
 exports.deleteSub = async (req, res) => {
   Subscription.destroy({
     where: {
-      id: req.body.id,
+      id: req.params.id,
     },
   })
     .then((subscription) => {

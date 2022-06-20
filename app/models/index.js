@@ -48,5 +48,6 @@ db.user.belongsToMany(db.subscription, {
 });
 
 db.ROLES = ["user", "admin", "moderator", "client"];
+db.Subs = ["Platinum", "Gold", "Silver"];
 
 module.exports = db;
