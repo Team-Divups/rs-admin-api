@@ -39,6 +39,7 @@ app.get("/", (req, res) => {
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/subcription.routes")(app);
+require("./app/routes/role.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3001;
@@ -48,23 +49,21 @@ app.listen(PORT, () => {
 
 function initialRole() {
   Role.create({
-    id: 1,
-    name: "user",
+    idrole: 1,
+    roleName: "user",
+    description: "User Access",
   });
 
   Role.create({
-    id: 2,
-    name: "moderator",
+    idrole: 2,
+    roleName: "moderator",
+    description: "moderator Access",
   });
 
   Role.create({
-    id: 3,
-    name: "admin",
-  });
-
-  Role.create({
-    id: 4,
-    name: "client",
+    idrole: 3,
+    roleName: "admin",
+    description: "admin Access",
   });
 }
 
@@ -159,7 +158,7 @@ function initialUser() {
     password: "12345678",
     firstname: "Anushan",
     lastname: "Santhirakumar",
-    status: "Active",
+    status: "Invited",
     position: "SE",
     userImg: "jhfsvjhdf",
   });
