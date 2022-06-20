@@ -15,6 +15,10 @@ exports.signup = (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    position: req.body.position,
+    companyname: req.body.companyname,
   })
     .then((user) => {
       //Default Role Assign
@@ -37,7 +41,7 @@ exports.signup = (req, res) => {
         });
       }
 
-      //Default SUbscription Assign
+      // Default SUbscription Assign
       if (req.body.subscription) {
         Sub.findAll({
           where: {
@@ -46,13 +50,13 @@ exports.signup = (req, res) => {
             },
           },
         }).then((subscription) => {
-          user.setSubs(subscription).then(() => {
+          user.setRoles(subscription).then(() => {
             res.send({ message: "User registered successfully!" });
           });
         });
       } else {
         // user role = 1
-        user.setSubs([1]).then(() => {
+        user.setRoles([1]).then(() => {
           res.send({ message: "User registered successfully!" });
         });
       }

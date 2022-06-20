@@ -11,10 +11,11 @@ module.exports = function (app) {
   });
 
   app.get("/api/test/all/sub/cat", controller.getSubCategory);
-  app.get("/api/test/all/sub", controller.getSubAllCategory);
-
+  app.get("/subscription", controller.getSubAllCategory);
+  app.get("/subscription/:id", controller.getSubCategoryID);
+  app.delete("/subscription/:id", controller.deleteSub);
   app.post(
-    "/api/test/all/sub/create",
+    "/subscriptions/new",
     // [authJwt.verifyToken],
     controller.createSub
   );
