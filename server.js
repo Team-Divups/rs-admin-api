@@ -127,39 +127,42 @@ function initialUser() {
   user.create({
     id: 1,
     companyId: 1,
-    username: "anushan",
-    email: "anushan1508@gmail.com",
-    password: "12345678",
+    username: "admin",
+    email: "admin@gmail.com",
+    password: "admin123",
     firstname: "Anushan",
     lastname: "Santhirakumar",
     status: "Active",
-    position: "SE",
+    position: "Tech Lead",
     userImg: "jhfsvjhdf",
+    role: "Admin",
   });
 
   user.create({
     id: 2,
     companyId: 2,
-    username: "Nishad",
-    email: "anushan1508@gmail.com",
-    password: "12345678",
+    username: "moderator",
+    email: "moderator@gmail.com",
+    password: "mod123",
     firstname: "Anushan",
     lastname: "Santhirakumar",
     status: "Active",
     position: "SE",
     userImg: "jhfsvjhdf",
+    role: "Moderator",
   });
 
   user.create({
     id: 3,
     companyId: 3,
-    username: "Hana",
-    email: "anushan1508@gmail.com",
-    password: "12345678",
+    username: "user",
+    email: "user@gmail.com",
+    password: "user123",
     firstname: "Anushan",
     lastname: "Santhirakumar",
     status: "Invited",
-    position: "SE",
+    position: "Sales",
     userImg: "jhfsvjhdf",
+    role: "user",
   });
 }

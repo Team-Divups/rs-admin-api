@@ -34,6 +34,9 @@ module.exports = (sequelize, Sequelize) => {
     userImg: {
       type: Sequelize.STRING,
     },
+    role: {
+      type: Sequelize.STRING,
+    },
   });
 
   return User;
