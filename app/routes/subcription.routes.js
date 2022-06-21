@@ -12,15 +12,27 @@ module.exports = function (app) {
 
   app.get(
     "/api/test/all/sub/cat",
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.getSubCategory
   );
-  app.get("/subscription", [authJwt.verifyToken], controller.getSubAllCategory);
+  app.get(
+    "/subscription",
+    // [authJwt.verifyToken],
+    controller.getSubAllCategory
+  );
   app.get(
     "/subscription/:id",
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.getSubCategoryID
   );
-  app.delete("/subscription/:id", [authJwt.verifyToken], controller.deleteSub);
-  app.post("/subscriptions/new", [authJwt.verifyToken], controller.createSub);
+  app.delete(
+    "/subscription/:id",
+    // [authJwt.verifyToken],
+    controller.deleteSub
+  );
+  app.post(
+    "/subscriptions/new",
+    // [authJwt.verifyToken],
+    controller.createSub
+  );
 };
