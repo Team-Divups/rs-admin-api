@@ -129,13 +129,14 @@ function initialUser() {
     companyId: 1,
     username: "admin",
     email: "admin@gmail.com",
-    password: "admin123",
+    password: "admin1234",
     firstname: "Anushan",
     lastname: "Santhirakumar",
     status: "Active",
     position: "Tech Lead",
     userImg: "jhfsvjhdf",
     role: "Admin",
+    roles: ["admin"],
   });
 
   user.create({
@@ -150,6 +151,7 @@ function initialUser() {
     position: "SE",
     userImg: "jhfsvjhdf",
     role: "Moderator",
+    roles: ["moderator"],
   });
 
   user.create({
@@ -164,5 +166,6 @@ function initialUser() {
     position: "Sales",
     userImg: "jhfsvjhdf",
     role: "user",
+    roles: ["user"],
   });
 }
