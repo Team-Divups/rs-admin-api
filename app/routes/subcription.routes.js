@@ -10,13 +10,17 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/test/all/sub/cat", controller.getSubCategory);
-  app.get("/subscription", controller.getSubAllCategory);
-  app.get("/subscription/:id", controller.getSubCategoryID);
-  app.delete("/subscription/:id", controller.deleteSub);
-  app.post(
-    "/subscriptions/new",
-    // [authJwt.verifyToken],
-    controller.createSub
+  app.get(
+    "/api/test/all/sub/cat",
+    [authJwt.verifyToken],
+    controller.getSubCategory
   );
+  app.get("/subscription", [authJwt.verifyToken], controller.getSubAllCategory);
+  app.get(
+    "/subscription/:id",
+    [authJwt.verifyToken],
+    controller.getSubCategoryID
+  );
+  app.delete("/subscription/:id", [authJwt.verifyToken], controller.deleteSub);
+  app.post("/subscriptions/new", [authJwt.verifyToken], controller.createSub);
 };
