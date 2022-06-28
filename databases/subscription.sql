@@ -1,16 +1,25 @@
-CREATE TABLE bs_admin.subscription (
-	id INT auto_increment NOT NULL,
-	subid char(5) NOT NULL,
-	name varchar(100) NOT NULL,
-	subcategory varchar(100) NULL,
-	mode varchar(100) NOT NULL,
-	owner varchar(100) NOT NULL,
-	location varchar(100) NULL,
-	`date` DATE DEFAULT CURRENT_DATE NULL,
-	CONSTRAINT subscription_pk PRIMARY KEY (id,subid)
-)
-ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb3
-COLLATE=utf8mb3_general_ci;
+CREATE TABLE `subscription` (
+  `idSubscription` int NOT NULL AUTO_INCREMENT,
+  `subId` char(8) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `appLogo` text,
+  `owner` varchar(45) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `location` varchar(45) DEFAULT NULL,
+  `type` varchar(45) NOT NULL,
+  `category` varchar(45) NOT NULL,
+  `WebsiteURL` varchar(500) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `contactNo` varchar(45) DEFAULT NULL,
+  `LinkedIn` varchar(500) DEFAULT NULL,
+  `facebook` varchar(500) DEFAULT NULL,
+  `Instagram` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`idSubscription`),
+) ;
 
-ALTER TABLE bs_admin.subscription ADD applogo TEXT NULL;
+COLLATE='utf8mb3_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=7
+;
+
+ALTER TABLE bsadmin.subscription CHANGE idSubscription id int auto_increment NOT NULL;

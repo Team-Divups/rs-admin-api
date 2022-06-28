@@ -14,47 +14,56 @@ AdminSchema =  yup.object().shape({
 });
 
 //get a specified user
-Adminrouter.get('/:id',async function(req,res){
-    try {
-        const sqlQuery= 'SELECT name,email,organization,designation,role,status FROM admin_user WHERE id=?';
-        const row= await pool.query(sqlQuery,req.params.id);
-
-        res.status(200).json(row);
-
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
+Adminrouter.get('/:id',(req,res)=>{
+    const sqlQuery = 'SELECT * FROM user WHERE id=?';
+    pool.query(sqlQuery,req.params.id,(err,rows,fields)=>{
+        if(!err)
+        {
+            console.log(rows);
+            res.status(200).json(rows);
+        }
+        else{
+            console.log(err);
+            res.status(400).send(err.message);
+        }
+    })
 })
 
 
 //get all
-Adminrouter.get('/',async function(req,res){
-    try {
-        const sqlQuery = 'SELECT * FROM admin_user';
-        const rows=await pool.query(sqlQuery,res.body);
-
-        res.status(200).json(rows);
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
+Adminrouter.get('/',(req,res)=>{
+    const sqlQuery = 'SELECT * FROM user';
+        pool.query(sqlQuery,(err,rows,fields)=>{
+            if(!err)
+            {
+                //console.log(rows);
+                res.status(200).json(rows);
+            }
+            else{
+                console.log(err);
+                res.status(400).send(err.message);
+            }
+        })
 })
 
 
 
 //create a new admin user
-Adminrouter.post('/create',async function(req,res){
+Adminrouter.post('/create',(req,res)=>{
     try {
-        const name = req.body.name;
+        const firstName = req.body.firstName;
+        const lastName = req.body.lastName;
         const email = req.body.email;
         const password=req.body.password;
-        const organization=req.body.organization;
-        const designation=req.body.designation;
+        const companyID=req.body.companyID;
+        const position=req.body.position;
         const role=req.body.role;
-        const comments=req.body.comments;
-        const status=req.body.status;
+        const comments = req.body.comments;
+        //const status=req.body.status;
+        //const userImg=req.file;
                 
-        const sqlQuery='INSERT INTO admin_user (name,email,password,organization,designation,role,comments,status) VALUES (?,?,?,?,?,?,?,?)';
-        const row= await pool.query(sqlQuery,[name,email,password,organization,designation,role,comments,status]);
+        const sqlQuery='INSERT INTO user (firstName,lastName,email,password,companyID,position,role,comments) VALUES (?,?,?,?,?,?,?,?)';
+        const row=pool.query(sqlQuery,[firstName,lastName,email,password,companyID,position,role,comments]);
         
         res.status(200).send({message:'user added'})
         
@@ -66,13 +75,14 @@ Adminrouter.post('/create',async function(req,res){
 
 
 //delete a specific user
-Adminrouter.delete('/delete/:id',async function(req,res){
+Adminrouter.delete('/delete/:id',(req,res)=>{
     try {
-        const sqlQuery='DELETE FROM admin_user WHERE id=?';
-        const row=await pool.query(sqlQuery,req.params.id);
+        const sqlQuery='DELETE FROM user WHERE id=?';
+        const row= pool.query(sqlQuery,req.params.id);
 
         res.status(200).send({message:'Data Deleted'});
     } catch (error){
+        console.log(error);
         res.status(400).send(error.message);
     }
 })
@@ -80,10 +90,10 @@ Adminrouter.delete('/delete/:id',async function(req,res){
 
 
 //delete all users
-Adminrouter.delete('/',async function(req,res){
+Adminrouter.delete('/',(req,res)=>{
     try {
-        const sqlQuery='DELETE FROM admin_user';
-        const row=await pool.query(sqlQuery);
+        const sqlQuery='DELETE FROM user';
+        const row= pool.query(sqlQuery);
 
         res.status(200).send({message:'Data Deleted'});
     } catch (error){
@@ -92,85 +102,50 @@ Adminrouter.delete('/',async function(req,res){
 })
 
 
-// update a specific user
-Adminrouter.put('/edit',async function(req,res){
+// update a specific user by admin
+Adminrouter.put('/edit',(req,res)=>{
     try {
+
         const id=req.body.id;
-        const name = req.body.name;
-        const email = req.body.email;
-        const organization=req.body.organization;
-        const designation=req.body.designation;
         const role=req.body.role;
         const status = req.body.status;
+       
+        const sqlQuery='UPDATE user SET role=?,status=? WHERE id=?';
+        const row=pool.query(sqlQuery,[role,status,id]);
 
-        AdminSchema.validate(
-            {
-                name,
-                email,
-                organization,
-                designation,
-                role,
-                status
-            }
-        ).catch((error)=>{
-            console.log(error);
-            res.status(422).send({messsage:"Validation errors"});
-        }).then((valid)=>{
-            if(valid){
-                console.log("Data validated");
-                const sqlQuery='UPDATE admin_user SET name=?, email=?,organization=?,designation=?, role=?,status=? WHERE id=?';
-                const row=pool.query(sqlQuery,[name,email,organization,designation,role,status,id]);
-
-                res.status(200).send({message:'user added'});
-            }
-        })
+        res.status(200).send({message:'user updated'});
+       
     } catch (error) {
         res.status(400).send(error.message);
         console.log(error);
     }
 })
 
-
-//update name of user
-Adminrouter.put('/editname',async function(req,res){
+//user updating his details
+Adminrouter.put('/profileedit',(req,res)=>{
     try {
+
         const id=req.body.id;
-        const name = req.body.name;
-
-        const sqlQuery='UPDATE admin_user SET name=? WHERE id=?';
-        const row=await pool.query(sqlQuery,[name,id]);
-
-        res.status(200).send({message:'user name updated'});
-        
-    } catch (error) {
-        res.status(400).send(error.message);
-        console.log(error);
-    }
-})
-
-
-
-//invite a user
-Adminrouter.post('/invite',async function(req,res){
-    try {
-        const name = req.body.name;
+        const firstName = req.body.firstName;
+        const lastName = req.body.lastName;
         const email = req.body.email;
         const password=req.body.password;
-        const organization=req.body.organization;
-        const designation=req.body.designation;
-        const role=req.body.role;
-        const comments = req.body.comments;
-        const status = req.body.status;
+        const companyID=req.body.companyID;
+        const position=req.body.position;
+       
+       
+        const sqlQuery='UPDATE user SET firstName=?,lastName=?,email=?,password=?,companyId=?,position=? WHERE id=?';
+        const row=pool.query(sqlQuery,[firstName,lastName,email,password,companyID,position,id]);
 
-        
-        const sqlQuery='INSERT INTO admin_user (name,email,password,organization,designation,role,comments,status) VALUES (?,?,?,?,?,?,?,?)';
-        const row=await pool.query(sqlQuery,[name,email,password,organization,designation,role,comments,status]);
-
-        res.status(200).send({message:'user invited'});
+        res.status(200).send({message:'profile details updated'});
+       
     } catch (error) {
         res.status(400).send(error.message);
+        console.log(error);
     }
 })
+
+
 
 
 

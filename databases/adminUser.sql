@@ -1,19 +1,19 @@
-CREATE TABLE bs_admin.admin_user (
-	id INT UNSIGNED auto_increment NOT NULL,
-	name varchar(100) NOT NULL,
-	email varchar(100) NOT NULL,
-	password varchar(100) NOT NULL,
-	organization varchar(100) NOT NULL,
-	designation varchar(100) NOT NULL,
-	`role` VARCHAR(100) NOT NULL,
-	joined_date DATE DEFAULT (CURRENT_DATE) NOT NULL,
-	CONSTRAINT NewTable_pk PRIMARY KEY (id)
-)
-ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb3
-COLLATE=utf8mb3_general_ci;
+CREATE TABLE `user` (
+  `userId` int NOT NULL AUTO_INCREMENT,
+  `password` varchar(20) NOT NULL,
+  `companyID` char(8) NOT NULL,
+  `firstName` varchar(45) NOT NULL,
+  `lastName` varchar(45) NOT NULL,
+  `role` int DEFAULT NULL,
+  `status` tinyint DEFAULT NULL,
+  `position` varchar(45) NOT NULL,
+  `userImg` text,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `companyID_UNIQUE` (`companyID`),
+  KEY `role_idx` (`role`),
+  CONSTRAINT `role` FOREIGN KEY (`role`) REFERENCES `role` (`idrole`)
+);
 
-ALTER TABLE bs_admin.admin_user ADD comments varchar(100) NOT NULL;
-ALTER TABLE bs_admin.admin_user ADD status BOOL DEFAULT 1 NOT NULL;
-ALTER TABLE bs_admin.admin_user MODIFY COLUMN status varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL;
-
+ALTER TABLE bsadmin.`user` ADD email varchar(100) NOT NULL;
+ALTER TABLE bsadmin.`user` MODIFY COLUMN status varchar(10) NULL;
+ALTER TABLE bsadmin.`user` MODIFY COLUMN status BOOL DEFAULT FALSE NULL;
