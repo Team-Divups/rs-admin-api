@@ -27,7 +27,7 @@ db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and Resync Database with { force: true }");
   initialRole();
   initialSubscription();
-  // initialUser();
+  initialUser();
 });
 
 // simple route
