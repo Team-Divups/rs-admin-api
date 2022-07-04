@@ -60,3 +60,17 @@ exports.getUserID = async (req, res) => {
       res.status(500).send({ message: err.message });
     });
 };
+
+//Delete Subscription by ID
+exports.deleteAllUser = async (req, res) => {
+  User.destroy({
+    where: {},
+    truncate: true,
+  })
+    .then((user) => {
+      res.send({ message: "Users Deleted" });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
