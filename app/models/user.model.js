@@ -31,11 +31,13 @@ module.exports = (sequelize, Sequelize) => {
     position: {
       type: Sequelize.STRING,
     },
-    userImg: {
-      type: Sequelize.STRING,
-    },
+    // userImg: {
+    //   type: Sequelize.STRING,
+    // },
     role: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM,
+      values: ["admin", "moderator", "user"],
+      defaultValue: "user",
     },
   });
 

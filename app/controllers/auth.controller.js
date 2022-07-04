@@ -12,20 +12,23 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
+    companyId: req.body.companyId,
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
     firstname: req.body.firstname,
     lastname: req.body.lastname,
+    status: req.body.status,
     position: req.body.position,
-    companyname: req.body.companyname,
+    role: req.body.roles,
   })
     .then((user) => {
-      //Default Role Assign
+      // res.send({ message: "User Created" });
+      // Default Role Assign
       if (req.body.roles) {
         Role.findAll({
           where: {
-            name: {
+            roleName: {
               [Op.or]: req.body.roles,
             },
           },
@@ -42,24 +45,24 @@ exports.signup = (req, res) => {
       }
 
       // Default SUbscription Assign
-      if (req.body.subscription) {
-        Sub.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.subscription,
-            },
-          },
-        }).then((subscription) => {
-          user.setRoles(subscription).then(() => {
-            res.send({ message: "User registered successfully!" });
-          });
-        });
-      } else {
-        // user role = 1
-        user.setRoles([1]).then(() => {
-          res.send({ message: "User registered successfully!" });
-        });
-      }
+      // if (req.body.subscription) {
+      //   Sub.findAll({
+      //     where: {
+      //       name: {
+      //         [Op.or]: req.body.subscription,
+      //       },
+      //     },
+      //   }).then((subscription) => {
+      //     user.setRoles(subscription).then(() => {
+      //       res.send({ message: "User registered successfully!" });
+      //     });
+      //   });
+      // } else {
+      //   // user role = 1
+      //   user.setRoles([1]).then(() => {
+      //     res.send({ message: "User registered successfully!" });
+      //   });
+      // }
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
@@ -95,9 +98,9 @@ exports.signin = (req, res) => {
 
       var authorities = [];
       user.getRoles().then((roles) => {
-        console.log(user);
         for (let i = 0; i < roles.length; i++) {
-          authorities.push(roles[i].name);
+          var x = roles[i].name;
+          authorities.push("ROLE_" + x);
           // authorities.push("ROLE_" + roles[i].name.toUpperCase());
         }
         res.status(200).send({

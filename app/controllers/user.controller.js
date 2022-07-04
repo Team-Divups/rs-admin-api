@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("../models");
 const config = require("../config/auth.config");
+// const { where } = require("sequelize/types");
 const User = db.user;
 const Role = db.role;
 const Subscription = db.subscription;
@@ -55,6 +56,20 @@ exports.getUserID = async (req, res) => {
   })
     .then((user) => {
       res.status(200).json(user);
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+//Delete All Users
+exports.deleteAllUser = async (req, res) => {
+  User.destroy({
+    where: {},
+    truncate: false,
+  })
+    .then((user) => {
+      res.send({ message: "All Users Deleted" });
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });

@@ -20,7 +20,7 @@ module.exports = function (app) {
 
   app.get(
     "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
+    // [authJwt.verifyToken, authJwt.isModerator],
     controller.moderatorBoard
   );
 
@@ -30,7 +30,12 @@ module.exports = function (app) {
     controller.adminBoard
   );
 
-  app.get("/user", controller.getAllUser);
+  app.get(
+    "/user",
+    // [authJwt.verifyToken],
+    controller.getAllUser
+  );
   app.delete("/user/:id", controller.deleteUser);
+  app.delete("/user/", controller.deleteAllUser);
   app.get("/user/:id", controller.getUserID);
 };
