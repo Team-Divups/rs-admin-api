@@ -69,7 +69,7 @@ exports.deleteAllUser = async (req, res) => {
     truncate: false,
   })
     .then((user) => {
-      res.send({ message: "Users Deleted" });
+      res.send({ message: "All Users Deleted" });
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });

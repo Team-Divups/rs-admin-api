@@ -20,7 +20,7 @@ exports.signup = (req, res) => {
     lastname: req.body.lastname,
     status: req.body.status,
     position: req.body.position,
-    role: req.body.role,
+    role: req.body.roles,
   })
     .then((user) => {
       // res.send({ message: "User Created" });
