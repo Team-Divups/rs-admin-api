@@ -5,7 +5,6 @@ const User = db.user;
 
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
-
   if (!token) {
     return res.status(403).send({
       message: "No token provided!",
@@ -24,12 +23,12 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
+  
   User.findOne({
     where: {
       id: req.userId,
     },
   }).then((user) => {
-    console.log(user);
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].roleName === "admin") {
@@ -51,7 +50,6 @@ isModerator = (req, res, next) => {
       id: req.userId,
     },
   }).then((user) => {
-    console.log(user);
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].roleName === "moderator") {
@@ -73,7 +71,6 @@ isModeratorOrAdmin = (req, res, next) => {
       id: req.userId,
     },
   }).then((user) => {
-    console.log(user);
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (

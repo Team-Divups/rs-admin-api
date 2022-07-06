@@ -32,7 +32,7 @@ module.exports = function (app) {
 
   app.get(
     "/user",
-    // [authJwt.verifyToken],
+    [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
     controller.getAllUser
   );
   app.delete(
@@ -40,6 +40,7 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.deleteUser
   );
-  app.delete("/user/:role", controller.deleteAllUser);
+  app.delete("/user/", controller.deleteAllUser);
   app.get("/user/:id", controller.getUserID);
+  app.patch("/user/:id", controller.editUser);
 };

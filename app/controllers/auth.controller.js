@@ -99,7 +99,7 @@ exports.signin = (req, res) => {
       user.getRoles().then((roles) => {
         for (let i = 0; i < roles.length; i++) {
           // authorities.push("ROLE_" + roles[i].name.toUpperCase());
-          authorities.push("ROLE_" + roles[i].name);
+          authorities.push("ROLE_" + roles[i].roleName);
         }
 
         res.status(200).send({
