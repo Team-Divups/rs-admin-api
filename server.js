@@ -1,8 +1,9 @@
 const express=require('express');
 const dotenv = require('dotenv').config({path:'.env'});
 const cors= require('cors');
-const { route } = require('./routes/Subscription');
+
 const subrouter = require('./routes/subscription.routes');
+const binrouter = require('./routes/bin.routes');
 
 
 //defining port
@@ -29,7 +30,7 @@ app.use('/role',Rolerouter);*/
 app.use('/Images',express.static('./Images'))
 
 app.use('/subscription',subrouter);
-
+app.use('/bin',binrouter);
 
 //listening to port 
 app.listen(PORT,()=>{

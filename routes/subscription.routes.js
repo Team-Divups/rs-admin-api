@@ -24,16 +24,18 @@ subrouter.get('/',controller.getAllSub);
 subrouter.get('/:id',controller.getSubById);
 subrouter.get('/susers/:id',controller.getSubUsers);
 subrouter.get('/subsites/:id',controller.getSubSites);
-
+subrouter.get('/ratings/:id',controller.getSubRatings);
+//subrouter.get('/bin',controller.getAllSubBin);
 
 subrouter.post('/create',upload.single('appLogo'),controller.createSub);
-subrouter.post('/restore',controller.restoreSub);
+//subrouter.post('/restore',controller.restoreSub);
 
-subrouter.put('/edit',controller.updateSub);
-subrouter.put('/delete',controller.restoreSubAll);
-subrouter.put('/deleteid',controller.restoreSub);
-
-subrouter.delete('/',controller.deleteAll);
-subrouter.delete('/:id',controller.deleteOne);
+subrouter.put('/edit',upload.single('appLogo'),controller.updateSub);
+subrouter.put('/delete',controller.deleteSubAll);
+subrouter.put('/deleteid',controller.deleteSub);
+subrouter.put('/freezeid',controller.freezeSub);
+subrouter.put('/deletesite',controller.deleteSite);
+//subrouter.delete('/',controller.deleteAll);
+//subrouter.delete('/:id',controller.deleteOne);
 
 module.exports = subrouter;
