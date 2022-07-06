@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("../models");
 const config = require("../config/auth.config");
+const Op = require("sequelize").Op;
 // const { where } = require("sequelize/types");
 const User = db.user;
 const Role = db.role;
@@ -22,8 +23,13 @@ exports.moderatorBoard = (req, res) => {
   res.status(200).send("Moderator Content.");
 };
 
+//Get all users
 exports.getAllUser = async (req, res) => {
-  User.findAll()
+  User.findAll({
+    where: {
+      id: { [Op.ne]: req.userId },
+    },
+  })
     .then((user) => {
       res.status(200).json(user);
     })
@@ -32,7 +38,7 @@ exports.getAllUser = async (req, res) => {
     });
 };
 
-//Delete Subscription by ID
+//Delete User by ID
 exports.deleteUser = async (req, res) => {
   User.destroy({
     where: {
@@ -41,6 +47,36 @@ exports.deleteUser = async (req, res) => {
   })
     .then((user) => {
       res.send({ message: "User Deleted" });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+//Edit User by ID
+exports.editUser = async (req, res) => {
+  console.log("hello 1");
+  User.findOne({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((user) => {
+      user.role = req.body.role;
+      user.status = req.body.status;
+      user.save().then((user) => {
+        Role.findAll({
+          where: {
+            roleName: {
+              [Op.or]: [user.role],
+            },
+          },
+        }).then((roles) => {
+          user.setRoles(roles).then(() => {
+            res.status(200).json(user);
+          });
+        });
+      });
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });

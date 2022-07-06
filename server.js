@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -131,48 +132,66 @@ function initialSubscription() {
 }
 
 function initialUser() {
-  user.create({
-    id: 1,
-    companyId: 1,
-    username: "admin",
-    email: "admin@gmail.com",
-    password: "admin1234",
-    firstname: "Admin FN",
-    lastname: "Admin LN",
-    status: "Active",
-    position: "Tech Lead",
-    userImg: "jhfsvjhdf",
-    role: "Admin",
-    roles: ["admin"],
-  });
+  user
+    .create({
+      id: 1,
+      companyId: 1,
+      username: "admin",
+      email: "admin@gmail.com",
+      password: bcrypt.hashSync("admin1234", 8),
+      firstname: "Admin FN",
+      lastname: "Admin LN",
+      status: "Active",
+      position: "Tech Lead",
+      userImg: "jhfsvjhdf",
+      role: "Admin",
+      roles: ["admin"],
+    })
+    .then((user) => {
+      user.setRoles([3]).then(() => {
+        console.log("Admin registered successfully!");
+      });
+    });
 
-  user.create({
-    id: 2,
-    companyId: 2,
-    username: "moderator",
-    email: "moderator@gmail.com",
-    password: "mod123",
-    firstname: "Moderator FN",
-    lastname: "Moderator LN",
-    status: "Active",
-    position: "SE",
-    userImg: "jhfsvjhdf",
-    role: "Moderator",
-    roles: ["moderator"],
-  });
+  user
+    .create({
+      id: 2,
+      companyId: 2,
+      username: "moderator",
+      email: "moderator@gmail.com",
+      password: bcrypt.hashSync("mod1234", 8),
+      firstname: "Moderator FN",
+      lastname: "Moderator LN",
+      status: "Active",
+      position: "SE",
+      userImg: "jhfsvjhdf",
+      role: "Moderator",
+      roles: ["moderator"],
+    })
+    .then((user) => {
+      user.setRoles([2]).then(() => {
+        console.log("moderator registered successfully!");
+      });
+    });
 
-  user.create({
-    id: 3,
-    companyId: 3,
-    username: "user",
-    email: "user@gmail.com",
-    password: "user123",
-    firstname: "User FN",
-    lastname: "User LN",
-    status: "Invited",
-    position: "Sales",
-    userImg: "jhfsvjhdf",
-    role: "user",
-    roles: ["user"],
-  });
+  user
+    .create({
+      id: 3,
+      companyId: 3,
+      username: "user",
+      email: "user@gmail.com",
+      password: bcrypt.hashSync("user1234", 8),
+      firstname: "User FN",
+      lastname: "User LN",
+      status: "Invited",
+      position: "Sales",
+      userImg: "jhfsvjhdf",
+      role: "user",
+      roles: ["user"],
+    })
+    .then((user) => {
+      user.setRoles([1]).then(() => {
+        console.log("User registered successfully!");
+      });
+    });
 }
