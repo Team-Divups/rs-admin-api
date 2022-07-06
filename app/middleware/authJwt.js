@@ -24,10 +24,15 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then((user) => {
+  User.findOne({
+    where: {
+      id: req.userId,
+    },
+  }).then((user) => {
+    console.log(user);
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+        if (roles[i].roleName === "admin") {
           next();
           return;
         }
@@ -40,53 +45,49 @@ isAdmin = (req, res, next) => {
   });
 };
 
-// isAdmin = (req, res, next) => {
-//   User.findByPk(req.userId).then((user) => {
-//     if (user.roles === "admin") {
-//       next();
-//       return;
-//     }
-//     req.status(403).send({
-//       message: "Require Admin Role",
-//     });
-//   });
-// };
-
 isModerator = (req, res, next) => {
-  User.findByPk(req.userId).then((user) => {
+  User.findOne({
+    where: {
+      id: req.userId,
+    },
+  }).then((user) => {
+    console.log(user);
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
+        if (roles[i].roleName === "moderator") {
           next();
           return;
         }
       }
-
       res.status(403).send({
-        message: "Require Moderator Role!",
+        message: "Require moderator Role!",
       });
+      return;
     });
   });
 };
 
 isModeratorOrAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then((user) => {
+  User.findOne({
+    where: {
+      id: req.userId,
+    },
+  }).then((user) => {
+    console.log(user);
     user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "moderator") {
-          next();
-          return;
-        }
-
-        if (roles[i].name === "admin") {
+        if (
+          roles[i].roleName === "admin" ||
+          roles[i].roleName === "moderator"
+        ) {
           next();
           return;
         }
       }
-
       res.status(403).send({
-        message: "Require Moderator or Admin Role!",
+        message: "Require Admin or Moderator Role!",
       });
+      return;
     });
   });
 };

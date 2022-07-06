@@ -34,6 +34,7 @@ exports.getAllUser = async (req, res) => {
 
 //Delete Subscription by ID
 exports.deleteUser = async (req, res) => {
+  console.log("Hello");
   User.destroy({
     where: {
       id: req.params.id,

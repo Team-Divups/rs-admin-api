@@ -37,7 +37,7 @@ module.exports = function (app) {
   );
   app.delete(
     "/user/:id/",
-    // [authJwt.isAdmin],
+    [authJwt.verifyToken, authJwt.isAdmin],
     controller.deleteUser
   );
   app.delete("/user/:role", controller.deleteAllUser);
