@@ -2,7 +2,6 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
-const Sub = db.subscription;
 
 const Op = db.Sequelize.Op;
 
@@ -20,7 +19,7 @@ exports.signup = (req, res) => {
     lastname: req.body.lastname,
     status: req.body.status,
     position: req.body.position,
-    role: req.body.roles,
+    role: req.body.role,
   })
     .then((user) => {
       // res.send({ message: "User Created" });
@@ -99,9 +98,8 @@ exports.signin = (req, res) => {
       var authorities = [];
       user.getRoles().then((roles) => {
         for (let i = 0; i < roles.length; i++) {
-          var x = roles[i].name;
-          authorities.push("ROLE_" + x);
           // authorities.push("ROLE_" + roles[i].name.toUpperCase());
+          authorities.push("ROLE_" + roles[i].name);
         }
         res.status(200).send({
           id: user.id,

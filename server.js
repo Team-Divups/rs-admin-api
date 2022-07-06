@@ -47,6 +47,13 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
+//Reset Password start
+app.get("/forgot-password", (req, res, next) => {});
+app.post("/forgot-password", (req, res, next) => {});
+app.get("/reset-password", (req, res, next) => {});
+app.post("/reset-password", (req, res, next) => {});
+//Reset Password End
+
 function initialRole() {
   Role.create({
     idrole: 1,
@@ -130,8 +137,8 @@ function initialUser() {
     username: "admin",
     email: "admin@gmail.com",
     password: "admin1234",
-    firstname: "Anushan",
-    lastname: "Santhirakumar",
+    firstname: "Admin FN",
+    lastname: "Admin LN",
     status: "Active",
     position: "Tech Lead",
     userImg: "jhfsvjhdf",
@@ -145,8 +152,8 @@ function initialUser() {
     username: "moderator",
     email: "moderator@gmail.com",
     password: "mod123",
-    firstname: "Anushan",
-    lastname: "Santhirakumar",
+    firstname: "Moderator FN",
+    lastname: "Moderator LN",
     status: "Active",
     position: "SE",
     userImg: "jhfsvjhdf",
@@ -160,8 +167,8 @@ function initialUser() {
     username: "user",
     email: "user@gmail.com",
     password: "user123",
-    firstname: "Anushan",
-    lastname: "Santhirakumar",
+    firstname: "User FN",
+    lastname: "User LN",
     status: "Invited",
     position: "Sales",
     userImg: "jhfsvjhdf",
