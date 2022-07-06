@@ -65,7 +65,9 @@ exports.getUserID = async (req, res) => {
 //Delete All Users
 exports.deleteAllUser = async (req, res) => {
   User.destroy({
-    where: {},
+    where: {
+      role: req.params.role,
+    },
     truncate: false,
   })
     .then((user) => {

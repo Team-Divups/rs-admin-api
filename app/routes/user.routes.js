@@ -35,7 +35,11 @@ module.exports = function (app) {
     // [authJwt.verifyToken],
     controller.getAllUser
   );
-  app.delete("/user/:id", controller.deleteUser);
-  app.delete("/user/", controller.deleteAllUser);
+  app.delete(
+    "/user/:id/",
+    // [authJwt.isAdmin],
+    controller.deleteUser
+  );
+  app.delete("/user/:role", controller.deleteAllUser);
   app.get("/user/:id", controller.getUserID);
 };

@@ -32,7 +32,6 @@ isAdmin = (req, res, next) => {
           return;
         }
       }
-
       res.status(403).send({
         message: "Require Admin Role!",
       });
@@ -40,6 +39,18 @@ isAdmin = (req, res, next) => {
     });
   });
 };
+
+// isAdmin = (req, res, next) => {
+//   User.findByPk(req.userId).then((user) => {
+//     if (user.roles === "admin") {
+//       next();
+//       return;
+//     }
+//     req.status(403).send({
+//       message: "Require Admin Role",
+//     });
+//   });
+// };
 
 isModerator = (req, res, next) => {
   User.findByPk(req.userId).then((user) => {
