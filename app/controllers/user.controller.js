@@ -55,7 +55,6 @@ exports.deleteUser = async (req, res) => {
 
 //Edit User by ID
 exports.editUser = async (req, res) => {
-  console.log("hello 1");
   User.findOne({
     where: {
       id: req.params.id,
@@ -100,9 +99,10 @@ exports.getUserID = async (req, res) => {
 
 //Delete All Users
 exports.deleteAllUser = async (req, res) => {
+  console.log(req.userId);
   User.destroy({
     where: {
-      role: req.params.role,
+      id: { [Op.ne]: req.userId },
     },
     truncate: false,
   })

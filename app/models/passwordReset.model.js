@@ -5,6 +5,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     token: {
       type: Sequelize.STRING,
+      
     },
   });
 

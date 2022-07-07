@@ -11,5 +11,5 @@ module.exports = function (app) {
   });
 
   app.post("/forgot", controller.forgotpassword);
-  app.post("/reset", controller.resetpassword);
+  app.post("/reset/:token", controller.resetpassword);
 };
