@@ -89,10 +89,32 @@ isModeratorOrAdmin = (req, res, next) => {
   });
 };
 
+isActive = (req, res, next) => {
+  User.findOne({
+    where: {
+      username: req.body.username,
+    },
+  }).then((user) => {
+    console.log(user.status);
+    if(user.status === "Active"){
+      next();
+      return;
+    }
+    else{
+      res.status(403).send({
+        message: "Require Active User!",
+      });
+      return;
+    }
+    
+    });
+};
+
 const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
   isModerator: isModerator,
   isModeratorOrAdmin: isModeratorOrAdmin,
+  isActive: isActive,
 };
 module.exports = authJwt;
