@@ -21,6 +21,7 @@ const db = require("./app/models");
 const Role = db.role;
 const Subscription = db.subscription;
 const user = db.user;
+const passwordReset = db.passwordReset;
 
 // db.sequelize.sync();
 // force: true will drop the table if it already exists
@@ -41,6 +42,7 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/subcription.routes")(app);
 require("./app/routes/role.routes")(app);
+require("./app/routes/passwordResr.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3001;
@@ -49,10 +51,10 @@ app.listen(PORT, () => {
 });
 
 //Reset Password start
-app.get("/forgot-password", (req, res, next) => {});
-app.post("/forgot-password", (req, res, next) => {});
-app.get("/reset-password", (req, res, next) => {});
-app.post("/reset-password", (req, res, next) => {});
+// app.get("/forgot-password", (req, res, next) => {});
+// app.post("/forgot-password", (req, res, next) => {});
+// app.get("/reset-password", (req, res, next) => {});
+// app.post("/reset-password", (req, res, next) => {});
 //Reset Password End
 
 function initialRole() {

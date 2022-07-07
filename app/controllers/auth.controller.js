@@ -83,6 +83,12 @@ exports.signin = (req, res) => {
         req.body.password,
         user.password
       );
+      if (user.status == "invited") {
+        return res.status(401).send({
+          accessToken: null,
+          message: "Inactive User!, Contact the admin to activate",
+        });
+      }
 
       if (!passwordIsValid) {
         return res.status(401).send({
