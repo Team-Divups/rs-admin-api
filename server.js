@@ -180,12 +180,12 @@ function initialUser() {
     .create({
       id: 3,
       companyId: 3,
-      username: "user",
+      username: "userActive",
       email: "user@gmail.com",
       password: bcrypt.hashSync("user1234", 8),
       firstname: "User FN",
       lastname: "User LN",
-      status: "Invited",
+      status: "Active",
       position: "Sales",
       userImg: "jhfsvjhdf",
       role: "user",
@@ -193,7 +193,28 @@ function initialUser() {
     })
     .then((user) => {
       user.setRoles([1]).then(() => {
-        console.log("User registered successfully!");
+        console.log("Active User registered successfully!");
       });
     });
+
+      user
+        .create({
+          id: 4,
+          companyId: 4,
+          username: "userInactive",
+          email: "user@gmail.com",
+          password: bcrypt.hashSync("user1234", 8),
+          firstname: "User FN",
+          lastname: "User LN",
+          status: "Invited",
+          position: "Sales",
+          userImg: "jhfsvjhdf",
+          role: "user",
+          roles: ["user"],
+        })
+        .then((user) => {
+          user.setRoles([1]).then(() => {
+            console.log("Invited User registered successfully!");
+          });
+        });
 }

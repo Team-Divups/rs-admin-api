@@ -42,26 +42,6 @@ exports.signup = (req, res) => {
           res.send({ message: "User registered successfully!" });
         });
       }
-
-      // Default SUbscription Assign
-      // if (req.body.subscription) {
-      //   Sub.findAll({
-      //     where: {
-      //       name: {
-      //         [Op.or]: req.body.subscription,
-      //       },
-      //     },
-      //   }).then((subscription) => {
-      //     user.setRoles(subscription).then(() => {
-      //       res.send({ message: "User registered successfully!" });
-      //     });
-      //   });
-      // } else {
-      //   // user role = 1
-      //   user.setRoles([1]).then(() => {
-      //     res.send({ message: "User registered successfully!" });
-      //   });
-      // }
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
